@@ -13,7 +13,7 @@ class vect2
         vect2();
         vect2(int a, int b);
         vect2(const vect2& other);
-        const vect2& operator=(const vect2& other);
+        vect2& operator=(const vect2& other);
         ~vect2();
 
         // getrs and seters
@@ -22,12 +22,12 @@ class vect2
         void setX(int a);
         void setY(int b);
 
-        bool operator==(const vect2& obj); // v1 == v2
-        bool operator!=(const vect2& obj);  // v1 != v2
+        bool operator==(const vect2& obj) const; // v1 == v2
+        bool operator!=(const vect2& obj) const;  // v1 != v2
 
         vect2& operator+=(const vect2& obj); // v1 += v2
         vect2& operator-=(const vect2& obj); // v1 -= v2
-         vect2& operator*=(const vect2& obj); // v1 *= v2
+        vect2& operator*=(const vect2& obj); // v1 *= v2
 
         vect2& operator++(); // ++i
         vect2& operator--(); // --i
@@ -36,18 +36,18 @@ class vect2
 
         vect2& operator*=(int num); // v1 *= 33
 
-        vect2 operator-(const vect2 &obj); // v1 - v2
-        vect2 operator+(const vect2 &obj); // v1 + v2
-        vect2 operator*(const vect2 &obj); // v1 *v2
+        vect2 operator-(const vect2 &obj) const; // v1 - v2
+        vect2 operator+(const vect2 &obj) const; // v1 + v2
+        vect2 operator*(const vect2 &obj) const; // v1 *v2
         
         vect2 operator-() const;
         vect2 operator*(int num) const;
-        vect2 operator=(int num);
+        vect2& operator=(int num);
 
-		// int operator[](int index) const;
-		// int& operator[](int index);
-
+        int& operator[](std::size_t idx);
+        int operator[](std::size_t idx) const;
 };
 std::ostream &operator<<(std::ostream& out, const vect2& F);
+vect2 operator*(int num, const vect2& v);
 #endif /*VECT2_HPP*/
 
