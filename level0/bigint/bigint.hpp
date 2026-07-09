@@ -7,7 +7,7 @@ class bigint
 {
     private:
         std::deque<int> container;
-        int data;
+
     public:
         bigint();
         bigint(int value);
@@ -21,6 +21,26 @@ class bigint
         void print()const;
         bigint operator+(const bigint &obj) const; // a + b
         bigint& operator+=(const bigint &obj); // a+= b
+
+        bigint& operator++(); // ++i
+        bigint operator++(int); // i++
+
+        bigint &operator<<(int bitshifted); // b << 10
+        bigint &operator<<=(int bitshifted); // d <<= 4
+        bigint &operator>>=(const bigint data);  // d >>= (const bigint) 2
+
+
+        bool operator<(const bigint obj) const;
+        bool operator>(const bigint obj) const;
+        bool operator==(const bigint obj) const;
+        bool operator!=(const bigint obj) const;
+        bool operator<=(const bigint obj) const;
+        bool operator>=(const bigint obj) const;
+
+        bigint& operator<<(const bigint &obj);
+        bigint& operator>>(const bigint &obj);
+
+
     // comparison
     // digitshift
 };

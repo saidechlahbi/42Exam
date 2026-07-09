@@ -2,19 +2,16 @@
 
 bigint::bigint(){
     container.push_front(0);
-    data = 0;
 }
 
 bigint::bigint(int value)
 {
     if (value == 0)
     {
-        data = value;
         container.push_front(0);
     }
     if (value > 0)
     {
-        data = value;
         while (value)
         {
             container.push_front(value%10);
@@ -23,15 +20,13 @@ bigint::bigint(int value)
     }
 }
 
-bigint::bigint(const bigint &other):container(other.container), data(other.data)
+bigint::bigint(const bigint &other):container(other.container)
 {}
-
 bigint& bigint::operator=(const bigint &other)
 {
     if (this != &other)
     {
         container = other.container;
-        data = other.data;
     }
     return *this;
 }
@@ -48,45 +43,41 @@ void bigint::print() const
 
 void bigint::addition(const bigint& obj)
 {
-    int value1, value2;
-    if (container.size() == 1)
-        value1 = container[0];
-    else
+    std::deque<int> new_result;
+    std::deque<int> first_container = this->container;
+    std::deque<int> second_container = obj.container;
+    if (this->container.size() == 0 && this->container[0] == 0)
     {
-        value1 = container[0];
-        for (int i = 1; i < container.size(); i++)
-        {
-            value1 *= 10;
-            value1 += container[i];
-        }
-
+        this->container = obj.container;
+        return;
     }
-
-    if (obj.container.size() == 1)
-        value2 = obj.container[0];
-    else
+    if (obj.container.size() == 0 && obj.container[0] == 0)
     {
-        value2 = obj.container[0];
-        for (int i = 1; i < obj.container.size(); i++)
-        {
-            value2 *= 10;
-            value2 += obj.container[i];
-        }
-
+        return;
     }
-
-    int data = value1 + value2;
-    container.clear();
-    if (data == 0)
-        container.push_front(0);
+    if (first_container.size() > second_container.size())
+    {
+        for (int i = second_container.size(); i < first_container.size(); i++)
+            second_container.push_back(0);        
+    }
+    if (second_container.size() > first_container.size())
+    {
+        for (int i = first_container.size(); i < second_container.size(); i++)
+            first_container.push_back(0);        
+    }
+    int data = 0;
+    for (int i = first_container.size() - 1; i >= 0; i--)
+    {
+        data = first_container[i] + second_container[i];
+        new_result.push_front(data%10);
+        if (data >= 10)
+            data = data - 10;
+        else 
+            data = 0;
+    }
     if (data > 0)
-    {
-        while (data)
-        {
-            container.push_front(data%10);
-            data = data / 10;
-        }
-    }
+        new_result.push_front(data);
+    this->container = new_result;
 }
 
 bigint bigint::operator+(const bigint &obj) const
