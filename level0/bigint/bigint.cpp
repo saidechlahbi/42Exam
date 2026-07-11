@@ -82,7 +82,42 @@ void bigint::addition(const bigint& obj)
 
 bigint bigint::operator+(const bigint &obj) const
 {
-
+    std::deque<int> new_result;
+    std::deque<int> first_container = this->container;
+    std::deque<int> second_container = obj.container;
+    if (this->container.size() == 0 && this->container[0] == 0)
+    {
+        this->container = obj.container;
+        return *this;
+    }
+    if (obj.container.size() == 0 && obj.container[0] == 0)
+    {
+        return *this;
+    }
+    if (first_container.size() > second_container.size())
+    {
+        for (int i = second_container.size(); i < first_container.size(); i++)
+            second_container.push_back(0);        
+    }
+    if (second_container.size() > first_container.size())
+    {
+        for (int i = first_container.size(); i < second_container.size(); i++)
+            first_container.push_back(0);        
+    }
+    int data = 0;
+    for (int i = first_container.size() - 1; i >= 0; i--)
+    {
+        data = first_container[i] + second_container[i];
+        new_result.push_front(data%10);
+        if (data >= 10)
+            data = data - 10;
+        else 
+            data = 0;
+    }
+    if (data > 0)
+        new_result.push_front(data);
+    this->container = new_result;
+    return *this;
 }
 
 bigint& bigint::operator+=(const bigint &obj)
