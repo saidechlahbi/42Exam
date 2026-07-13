@@ -4,7 +4,7 @@ bigint::bigint(){
     container.push_front(0);
 }
 
-bigint::bigint(int value)
+bigint::bigint(unsigned long long value)
 {
     if (value == 0)
     {
@@ -82,17 +82,19 @@ void bigint::addition(const bigint& obj)
 
 bigint bigint::operator+(const bigint &obj) const
 {
+    bigint result;
     std::deque<int> new_result;
     std::deque<int> first_container = this->container;
     std::deque<int> second_container = obj.container;
     if (this->container.size() == 0 && this->container[0] == 0)
     {
-        this->container = obj.container;
-        return *this;
+        result.container = obj.container;
+        return result;
     }
     if (obj.container.size() == 0 && obj.container[0] == 0)
     {
-        return *this;
+        result.container = this->container;
+        return result;
     }
     if (first_container.size() > second_container.size())
     {
@@ -116,13 +118,55 @@ bigint bigint::operator+(const bigint &obj) const
     }
     if (data > 0)
         new_result.push_front(data);
-    this->container = new_result;
-    return *this;
+    result.container = new_result;
+    return result;
 }
 
 bigint& bigint::operator+=(const bigint &obj)
 {
-    return this.addition(obj);
+    this->addition(obj);
+    return *this;
+}
+
+bigint& bigint::operator++()
+{
+    *this = *this + bigint(1);
+    return *this;
+}
+
+bigint bigint::operator++(int)
+{
+    bigint tmp = *this;
+    ++(*this);
+    return tmp;
+}
+
+bigint bigint::operator<<(int bitshifted)
+{
+    bigint tmp = *this;
+    for (int i = 0; i < bitshifted; i++)
+        tmp.container.push_back(0);
+    return tmp;
+}
+
+bigint& bigint::operator<<=(int bitshifted)
+{
+    for (int i = 0; i < bitshifted; i++)
+        this->container.push_back(0);
+    return *this;
+}
+bigint& bigint::operator>>=(const bigint data)
+{
+    unsigned long n = 0;
+    for (int i = 0; i < data.container.size(); i++)
+    {
+        n = n * 10 + data.container[i];
+        if (n >=  INT_MAX)
+            n = INT_MAX;
+    }
+    
+    *this = *this >> n;
+     return *this;
 }
 
 std::ostream &operator<<(std::ostream& out, const bigint &F)

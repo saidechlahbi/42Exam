@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <deque>
+#include <climits>
 class bigint 
 {
     private:
@@ -10,7 +11,8 @@ class bigint
 
     public:
         bigint();
-        bigint(int value);
+        bigint(unsigned long long value);
+
         bigint(const bigint &other);
         bigint &operator=(const bigint &other);
         ~bigint();
@@ -25,8 +27,13 @@ class bigint
         bigint& operator++(); // ++i
         bigint operator++(int); // i++
 
-        bigint &operator<<(int bitshifted); // b << 10
+        bigint operator<<(int bitshifted); // b << 10
+        bigint operator>>(int bitshifted);
         bigint &operator<<=(int bitshifted); // d <<= 4
+        bigint &operator>>=(int bitshifted);
+        bigint& operator<<(const bigint &obj);
+        bigint& operator>>(const bigint &obj);
+        bigint &operator<<=(const bigint obj);
         bigint &operator>>=(const bigint data);  // d >>= (const bigint) 2
 
 
@@ -37,8 +44,6 @@ class bigint
         bool operator<=(const bigint obj) const;
         bool operator>=(const bigint obj) const;
 
-        bigint& operator<<(const bigint &obj);
-        bigint& operator>>(const bigint &obj);
 
 
     // comparison
