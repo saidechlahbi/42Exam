@@ -17,7 +17,6 @@ class bigint
         bigint &operator=(const bigint &other);
         ~bigint();
 
-        void addition(const bigint& obj);
 
         /* helper functions*/
         void print()const;
@@ -28,13 +27,13 @@ class bigint
         bigint operator++(int); // i++
 
         bigint operator<<(int bitshifted); // b << 10
-        bigint operator>>(int bitshifted);
         bigint &operator<<=(int bitshifted); // d <<= 4
+        bigint operator>>(int bitshifted);
         bigint &operator>>=(int bitshifted);
-        bigint& operator<<(const bigint &obj);
-        bigint& operator>>(const bigint &obj);
-        bigint &operator<<=(const bigint obj);
-        bigint &operator>>=(const bigint data);  // d >>= (const bigint) 2
+        bigint operator<<(const bigint &obj);
+        bigint operator>>(const bigint &obj);
+        bigint &operator<<=(const bigint &obj);
+        bigint &operator>>=(const bigint &data);  // d >>= (const bigint) 2
 
 
         bool operator<(const bigint obj) const;
@@ -44,10 +43,6 @@ class bigint
         bool operator<=(const bigint obj) const;
         bool operator>=(const bigint obj) const;
 
-
-
-    // comparison
-    // digitshift
 };
 
 std::ostream& operator<<(std::ostream &out, const bigint& F);
